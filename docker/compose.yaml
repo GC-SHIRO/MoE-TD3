@@ -1,0 +1,24 @@
+# 在仓库根目录执行：docker compose -f docker/compose.yaml run --rm sim
+services:
+  sim:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    image: landing-sim:jazzy-harmonic
+    network_mode: host
+    ipc: host
+    environment:
+      - LANDING_REPO_ROOT=/workspace
+      - DISPLAY=${DISPLAY:-}
+    volumes:
+      - ..:/workspace
+      - /tmp/.X11-unix:/tmp/.X11-unix
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    stdin_open: true
+    tty: true

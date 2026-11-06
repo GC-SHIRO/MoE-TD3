@@ -1,0 +1,5 @@
+# Auto detect text files and perform LF normalization
+* text=auto
+
+# 容器内执行的脚本必须保持 LF
+*.sh text eol=lf

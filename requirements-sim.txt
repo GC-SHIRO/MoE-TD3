@@ -1,0 +1,3 @@
+# 仿真侧 pip 依赖；ROS2、Gazebo、PX4、px4_msgs、cv_bridge 由镜像安装，见 docker/Dockerfile。
+-r requirements.txt
+ultralytics
