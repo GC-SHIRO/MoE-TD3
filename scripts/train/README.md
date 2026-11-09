@@ -5,7 +5,8 @@
 
 ## 运行顺序
 
-先在 `stage0_single_head.py` 的 `TRAINING_ARGS.data_path` 指定正式 Sampling 文件，
+先在 `stage0_single_head.py` 的 `TRAINING_ARGS.data_path` 指定 `collect.py` 采集的正式数据
+（默认 `data/expert/ros2_gz/global_expert.jsonl`），
 并在三个脚本顶部设置同一个新的 `EXPERIMENT_DIR`。默认使用 `experiment_01`。
 
 ```bash
@@ -16,9 +17,12 @@ python -m scripts.train.stage2_joint
 
 | 脚本 | 输入 | 更新内容 | 默认训练步数 |
 | --- | --- | --- | ---: |
-| `stage0_single_head.py` | Sampling JSON/JSONL | 单头 Transformer Actor、双 Critic | 100000 |
-| `stage1_pretrain.py` | 指定 Stage 0 的 `final.pt` | Router 和五动作头，encoder 默认冻结 | 20000 |
-| `stage2_joint.py` | 指定 Stage 1 的 `final.pt` | MoE Actor、encoder、Router、双 Critic | 100000 |
+| `stage0_single_head.py` | 采集 JSON/JSONL | 单头 Transformer Actor、双 Critic | 20000 |
+| `stage1_pretrain.py` | 指定 Stage 0 的 `final.pt` | Router 和五动作头，encoder 默认冻结 | 5000 |
+| `stage2_joint.py` | 指定 Stage 1 的 `final.pt` | MoE Actor、encoder、Router、双 Critic | 20000 |
+
+默认步数沿用旧仓库 286 回合试验的配置。`Args.bc_anneal_steps=150000` 大于这些步数，
+BC 权重在训练结束时尚未退火到 `bc_weight_final`；数据量增加、步数加长时一并检查。
 
 Stage 0 使用单头 TD3-BC。Stage 1 复制单头 encoder 和动作 MLP 到五个专家，
 用加权交叉熵监督 Router，用阶段对应动作头计算 BC；双 Critic 原样保留。

@@ -40,8 +40,9 @@ docker compose -f docker/compose.yaml run --rm sim
 ros2 launch landing_sim landing.launch.py num_slots:=1 headless:=true detection_source:=truth
 ```
 
-另开一个终端进入同一容器，在 `/workspace` 运行采集。先把 `collect.py` 顶部改为
-`BACKEND = "ros2_gz"`，`NUM_SLOTS` 与启动参数 `num_slots` 一致：
+另开一个终端进入同一容器，在 `/workspace` 运行采集。先修改 `collect.py` 顶部：
+`BACKEND = "ros2_gz"`，`NUM_SLOTS` 与启动参数 `num_slots` 一致，
+`BACKEND_CONFIG["detection_source"]` 与启动参数 `detection_source` 一致：
 
 ```bash
 python3 collect.py --test

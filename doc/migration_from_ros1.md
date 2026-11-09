@@ -1,6 +1,7 @@
 # 从 ROS1 工具链迁移
 
-来源：旧仓库 `Landing_New`（main 分支，迁移方案见其 `doc/ros2_migration_plan.md`）。
+来源：旧仓库 [GC-SHIRO/Landing_New](https://github.com/GC-SHIRO/Landing_New)。迁移方案见其
+`doc/ros2_migration_plan.md`（PR #3，合并前位于 `claude/ros2-migration-plan` 分支）。
 
 ## 1. 迁移对照
 
